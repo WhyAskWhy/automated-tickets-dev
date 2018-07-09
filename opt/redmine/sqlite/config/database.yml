@@ -1,0 +1,11 @@
+# https://github.com/WhyAskWhy/automated-tickets
+# https://github.com/WhyAskWhy/automated-tickets-dev
+
+# SQLite3 development instance
+production:
+  adapter: sqlite3
+  database: db/redmine.db
+
+development:
+  adapter: sqlite3
+  database: db/redmine.db
