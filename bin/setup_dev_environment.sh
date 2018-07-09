@@ -48,6 +48,9 @@ THIS_DEV_ENV_GIT_REPO_BASENAME="$(basename ${THIS_DEV_ENV_GIT_REPO_URL})"
 
 BASE_REDMINE_INSTALL_DIR="/opt/redmine"
 
+# TODO: Find a safe way to automatically use 'tee' for all commands without
+# unintentionally muting error codes. Until then, we do not actually use
+# this file.
 SETUP_LOG_FILE="$HOME/automated-tickets_dev_env_setup_output.txt"
 
 # Create empty log file so that later tee commands can append to it
@@ -73,11 +76,6 @@ sudo rm -rf ${MAIN_PROJECT_GIT_REPO_BASENAME}
 echo "* Cloning ${THIS_DEV_ENV_GIT_REPO_URL} ..."
 git clone ${THIS_DEV_ENV_GIT_REPO_URL} ||
     { echo "Failed to clone ${THIS_DEV_ENV_GIT_REPO_URL}. Aborting!"; exit 1; }
-
-# TODO: Fix this once ready to merge (use 'master' by default?)
-cd ${THIS_DEV_ENV_GIT_REPO_BASENAME}
-git checkout initial-dev-env-files
-cd /tmp
 
 echo "* Cloning ${MAIN_PROJECT_GIT_REPO_URL} ..."
 git clone ${MAIN_PROJECT_GIT_REPO_URL} ||
