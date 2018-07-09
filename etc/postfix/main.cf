@@ -1,0 +1,69 @@
+# https://github.com/WhyAskWhy/automated-tickets-dev
+
+smtpd_banner = $myhostname ESMTP $mail_name
+
+# Whether or not to use the local biff service. This service sends "new mail"
+# notifications to users who have requested new mail notification with the
+# UNIX command "biff y".
+# http://www.postfix.org/postconf.5.html
+# biff (default: yes)
+biff = no
+
+# appending .domain is the MUA's job.
+append_dot_mydomain = no
+
+# Force Postfix to auto-detect the system hostname
+#myhostname = localhost
+myorigin = $myhostname
+mynetworks = 127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128
+mydestination =
+    localhost.$mydomain
+    localhost.localdomain
+    localhost
+    $mydomain
+    $myhostname
+    example.com
+
+mailbox_size_limit = 0
+
+inet_protocols = all
+inet_interfaces = loopback-only
+relayhost =
+
+# Throttle mail deliveries in an attempt to help prevent duplicate tickets
+# due to 5xx server responses when attempting to submit multiple
+# automated-tickets emails in rapid fire to both "mysql" and "sqlite" local
+# aliases. This problem seems to mostly affect slower systems as the more
+# powerful test boxes I've used rarely produce duplicated tickets.
+# http://www.postfix.org/postconf.5.html#default_transport_rate_delay
+# http://www.postfix.org/postconf.5.html#transport_transport_rate_delay
+# http://www.postfix.org/postconf.5.html#default_destination_concurrency_limit
+# http://www.postfix.org/postconf.5.html#local_destination_concurrency_limit
+# http://www.postfix.org/postconf.5.html#smtp_destination_concurrency_limit
+default_transport_rate_delay = 5s
+default_destination_concurrency_limit = 1
+local_transport_transport_rate_delay = 5s
+local_destination_concurrency_limit = 1
+
+# Used to block outside delivery attempts
+#
+# The default mail delivery transport and next-hop destination for destinations
+# that do not match $mydestination, $inet_interfaces, $proxy_interfaces,
+# $virtual_alias_domains, $virtual_mailbox_domains, or $relay_domains.
+default_transport = error:All outgoing mail is disabled
+
+# The default mail delivery transport and next-hop destination for remote
+# delivery to domains listed with $relay_domains. In order of decreasing
+# precedence, the nexthop destination is taken from $relay_transport,
+# $sender_dependent_relayhost_maps, $relayhost, or from the recipient domain.
+# This information can be overruled with the transport(5) table.
+relay_transport = error:All outgoing mail is disabled
+
+# Local aliases used to route test email notifications into local test Redmine
+# instance.
+alias_maps = hash:/etc/postfix/aliases.conf
+alias_database = hash:/etc/postfix/aliases.conf
+
+# Apply "header checks" in order to record Subject lines of test emails
+# in the /var/log/mail.log file for review/troubleshooting purposes.
+header_checks = regexp:/etc/postfix/header_checks.conf
