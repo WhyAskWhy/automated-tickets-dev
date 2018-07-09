@@ -76,4 +76,4 @@ done
 
 echo "Finished generating Automated Tickets emails."
 
-echo "NOTE: It may take some time for Postfix to finish submitting them via the HTTP API. Force with sudo postqueue -f"
+echo "NOTE: It may take some time for Postfix to finish submitting them via the HTTP API. Please wait patiently; forcing via sudo postqueue -f may result in duplicate tickets."
