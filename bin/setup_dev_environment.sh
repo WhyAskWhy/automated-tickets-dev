@@ -257,14 +257,18 @@ do
     sudo bundle exec rake generate_secret_token ||
         { echo "Failed to generate secret token. Aborting!"; exit 1; }
 
-    for environment in production development
-    do
-        sudo RAILS_ENV=${environment} bundle exec rake db:migrate ||
-            { echo "Failed to run database migrations. Aborting!"; exit 1; }
+    # Not needed since we import a db backup. We should only need this if/when
+    # we handle in-place automatic upgrades for the stable branch. Since we are
+    # using a specific tag for the installation this is just wasted time/effort.
+    #
+    # for environment in production development
+    # do
+    #     sudo RAILS_ENV=${environment} bundle exec rake db:migrate ||
+    #         { echo "Failed to run database migrations. Aborting!"; exit 1; }
 
-        sudo RAILS_ENV=${environment} REDMINE_LANG=en bundle exec rake redmine:load_default_data ||
-            { echo "Failed to load default data into database. Aborting!"; exit 1; }
-    done
+    #     sudo RAILS_ENV=${environment} REDMINE_LANG=en bundle exec rake redmine:load_default_data ||
+    #         { echo "Failed to load default data into database. Aborting!"; exit 1; }
+    # done
 
 
 
