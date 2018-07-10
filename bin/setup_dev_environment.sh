@@ -81,6 +81,18 @@ echo "* Cloning ${MAIN_PROJECT_GIT_REPO_URL} ..."
 git clone ${MAIN_PROJECT_GIT_REPO_URL} ||
     { echo "Failed to clone ${MAIN_PROJECT_GIT_REPO_URL}. Aborting!"; exit 1; }
 
+#
+# Deploy rsyslog config fragment to catch/redirect automated-tickets messages
+#
+
+echo "* Deploying rsyslog conf file for automated-tickets log messages ..."
+sudo cp -vf /tmp/${THIS_DEV_ENV_GIT_REPO_BASENAME}/etc/rsyslog.d/automated-tickets.conf /etc/rsyslog.d/ ||
+    { echo "Failed to deploy rsyslog conf file for automated-tickets log messages. Aborting!"; exit 1; }
+
+echo "* Restarting rsyslog to apply conf changes ..."
+sudo systemctl restart rsyslog ||
+    { echo "Failed to restart rsyslog to apply conf changes. Aborting!"; exit 1; }
+
 ######################################################
 # Setup upstream apt repos
 ######################################################
