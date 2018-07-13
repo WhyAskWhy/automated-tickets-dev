@@ -2,8 +2,6 @@
 
 # https://github.com/WhyAskWhy/automated-tickets
 # https://github.com/WhyAskWhy/automated-tickets-dev
-# Enable MySQL APT repo in order to install MySQL Workbench
-# https://dev.mysql.com/get/Downloads/MySQLGUITools/mysql-workbench-community-6.3.10-1ubuntu16.04-amd64.deb
 
 
 # Purpose: Help setup new Ubuntu 16.04 VM for testing automated-tickets project
@@ -130,8 +128,8 @@ fi
 
 # Nginx
 if [[ ! -f /tmp/${THIS_DEV_ENV_GIT_REPO_BASENAME}/keys/nginx_signing.key ]]; then
-wget https://nginx.org/keys/nginx_signing.key -O - | sudo apt-key add - ||
-    { echo "Failed to retrieve nginx package signing key. Aborting!"; exit 1; }
+    wget https://nginx.org/keys/nginx_signing.key -O - | sudo apt-key add - ||
+        { echo "Failed to retrieve nginx package signing key. Aborting!"; exit 1; }
 else
     sudo apt-key add /tmp/${THIS_DEV_ENV_GIT_REPO_BASENAME}/keys/nginx_signing.key ||
         { echo "[!] Failed to install local repo copy of nginx signing key ... aborting"; exit 1; }
