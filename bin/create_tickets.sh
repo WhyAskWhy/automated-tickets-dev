@@ -50,8 +50,8 @@ sudo sed -i 's/testing_mode \= true/testing_mode = false/' /tmp/${MAIN_PROJECT_G
 
 # Disable verbose logging to console since the verbose output is not needed
 # by default (can be enabled later as needed)
-sudo sed -i 's/display_debug_messages \= true/display_debug_messages = false/' /tmp/${MAIN_PROJECT_GIT_REPO_BASENAME}/automated_tickets.ini
-sudo sed -i 's/display_info_messages \= true/display_info_messages = false/' /tmp/${MAIN_PROJECT_GIT_REPO_BASENAME}/automated_tickets.ini
+sudo sed -i 's/display_console_debug_messages \= true/display_console_debug_messages = false/' /tmp/${MAIN_PROJECT_GIT_REPO_BASENAME}/automated_tickets.ini
+sudo sed -i 's/display_console_info_messages \= true/display_console_info_messages = false/' /tmp/${MAIN_PROJECT_GIT_REPO_BASENAME}/automated_tickets.ini
 
 # Exercise known static keywords
 for frequency in \
